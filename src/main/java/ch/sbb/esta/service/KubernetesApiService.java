@@ -17,10 +17,6 @@ public class KubernetesApiService {
         return kubernetesClient.configMaps().withName(name).get();
     }
 
-    public Secret getSecretByName(String name) {
-        return kubernetesClient.secrets().withName(name).get();
-    }
-
     public KubernetesClient getKubernetesClient() {
         return kubernetesClient;
     }
