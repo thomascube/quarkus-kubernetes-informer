@@ -20,7 +20,11 @@ public class ConfigMapListener {
     @ConsumeEvent("CM_MODIFIED")
     public void configMapModified(ConfigMapModifiedEvent event) {
         log.info("ConfigMap changed: {}", event.newCm().getMetadata().getName());
-        var cm = kubernetesApi.getConfigMapByName(KubernetesApiService.DEFAULT_CONFIGMAP);
-        log.info("Got ConfigMap {}", cm.getMetadata().getName());
+        try {
+            var cm = kubernetesApi.getConfigMapByName(KubernetesApiService.DEFAULT_CONFIGMAP);
+            log.info("Got ConfigMap {}", cm.getMetadata().getName());
+        } catch (Throwable e) {
+            log.error("Failed fetching ConfigMap", e);
+        }
     }
 }
