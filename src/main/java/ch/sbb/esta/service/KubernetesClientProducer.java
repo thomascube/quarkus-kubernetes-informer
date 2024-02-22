@@ -16,7 +16,9 @@ public class KubernetesClientProducer {
     @Produces
     public KubernetesClient kubernetesClient() {
         final var configBuilder = new ConfigBuilder().withNamespace(namespace);
-        return new KubernetesClientBuilder().withConfig(configBuilder.build()).build();
+        return new KubernetesClientBuilder()
+                .withConfig(configBuilder.build())
+                .build();
     }
 
 }

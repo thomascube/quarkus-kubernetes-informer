@@ -17,14 +17,14 @@ public class ConfigMapListener {
         log.info("New ConfigMap received: {}", cm.getMetadata().getName());
     }
 
-    @ConsumeEvent("CM_MODIFIED")
+    @ConsumeEvent(value = "CM_MODIFIED", blocking = true)
     public void configMapModified(ConfigMapModifiedEvent event) {
         log.info("ConfigMap changed: {}", event.newCm().getMetadata().getName());
         try {
             // fetch an arbitrary resource from the Kubernetes API
             // this call will block the thread and eventually fail with a timeout exception
-            var cm = kubernetesApi.getConfigMapByName(KubernetesApiService.DEFAULT_CONFIGMAP);
-            log.info("Got ConfigMap {}", cm.getMetadata().getName());
+            var cm = kubernetesApi.getConfigMapByName(event.newCm().getMetadata().getName());
+            log.info("Fetched ConfigMap {}", cm.getMetadata().getName());
         } catch (Throwable e) {
             log.error("Failed fetching ConfigMap", e);
         }

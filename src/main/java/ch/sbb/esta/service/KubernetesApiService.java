@@ -8,8 +8,6 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class KubernetesApiService {
 
-    public static final String DEFAULT_CONFIGMAP = "openshift-service-ca.crt";
-
     @Inject KubernetesClient kubernetesClient;
 
     public ConfigMap getConfigMapByName(String name) {
